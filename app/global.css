@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
 
 ::selection {
   background-color: #47a3f3;
@@ -31,6 +32,44 @@
 
 html {
   min-width: 360px;
+}
+
+body {
+  background-color: #f6f2e8;
+  color: #111827;
+}
+
+.dark body {
+  background-color: #0b0b0b;
+  color: #f5f5f5;
+}
+
+.footer-links,
+.footer-copy {
+  color: #111827;
+}
+
+.dark .footer-links,
+.dark .footer-copy {
+  color: #d1d5db;
+}
+
+.footer-link:hover {
+  color: #6b7280;
+}
+
+.dark .footer-link:hover {
+  color: #f5f5f5;
+}
+
+.course-card {
+  background-color: #fbf6ee;
+  color: #111827;
+}
+
+.dark .course-card {
+  background-color: #171717;
+  color: #f5f5f5;
 }
 
 .prose .anchor {
@@ -147,4 +186,28 @@ table {
 
 .title {
   text-wrap: balance;
+}
+
+.signature text {
+  fill: currentColor;
+  fill-opacity: 0;
+  font-size: 96px;
+  stroke: currentColor;
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+  animation: signature-draw 5s ease forwards;
+}
+
+@keyframes signature-draw {
+  0% {
+    stroke-dashoffset: 1200;
+    fill-opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    fill-opacity: 1;
+  }
 }
