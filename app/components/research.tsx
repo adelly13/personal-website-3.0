@@ -1,7 +1,7 @@
 export default function Research() {
   return (
     <section>
-      <h1 className="mb-4 text-4xl font-semibold tracking-tighter">research</h1>
+      <h1 className="mb-4 text-4xl font-semibold tracking-tighter">Research</h1>
 
       <p className="mb-4">I am interested in applying computational methods to creating novel treatments and improving early disease detection, particularly as it relates to cancer biology and immunometabolism.</p>
 
