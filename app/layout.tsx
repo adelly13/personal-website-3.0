@@ -1,12 +1,21 @@
 import './global.css'
 import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
+import { Geist, Geist_Mono } from 'next/font/google'
 import { Navbar } from './components/nav'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import Footer from './components/footer'
 import { baseUrl } from './sitemap'
+
+const geistSans = Geist({
+  subsets: ['latin'],
+  variable: '--font-geist-sans',
+})
+
+const geistMono = Geist_Mono({
+  subsets: ['latin'],
+  variable: '--font-geist-mono',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -48,8 +57,8 @@ export default function RootLayout({
     <html
       lang="en"
       className={cx(
-        GeistSans.variable,
-        GeistMono.variable
+        geistSans.variable,
+        geistMono.variable
       )}
     >
       <body className="antialiased max-w-2xl mx-4 mt-8 lg:mx-auto">
