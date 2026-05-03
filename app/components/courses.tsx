@@ -1,36 +1,35 @@
 export default function Courses() {
   const semesterCourses = {
-    'summer 2024': [
-      'cs 61a: structure of computer programs',
-      '*ewrt 2: crit. reading, writing, & thinking',
+    'Summer 2024': [
+      'CS 61A: Structure of Computer Programs',
     ],
-    'fall 2024': [
-      'cs 61b: data structures',
-      'cs 195: social implications of comp. tech',
-      'eecs 16a: design info devices & systems',
-      'ugba 10x: foundations of business',
-      'ugba 196: managing tech innovation',
+    'Fall 2024': [
+      'CS 61B: Data Structures',
+      'CS 195: Implications of Computing Technology',
+      'EECS 16A: Info. Devices & Systems',
+      'UGBA 10X: Foundations of Business',
+      'UGBA 196: Technology Innovation',
     ],
-    'spring 2025': [
-      'cs 70: discrete math & probability theory',
-      'desinv 22: prototyping & fabrication',
-      'eecs 16b: intro to circuits & devices',
-      'math 54: linear algebra & diff. equations',
-      'physics 7b: physics for scientists',
+    'Spring 2025': [
+      'CS 70: Discrete Mathematics & Probability Theory',
+      'DESINV 22: Prototyping & Fabrication',
+      'EECS 16B: Circuits & Devices',
+      'MATH 54: Linear Algebra & Diff. Eqns.',
+      'PHYSICS 7B: Electromagnetism',
     ],
-    'fall 2025': [
-      'cs 61c: great ideas of comp. architecture',
-      'cs 189: introduction to machine learning',
-      'eecs 127: optimazation models',
-      'math 110: abstract linear algebra',
-      'theater 52ac: dance in american cultures',
+    'Fall 2025': [
+      'CS 61C: Machine Architecture',
+      'CS 189: Machine Learning',
+      'EECS 127: Optimization',
+      'MATH 110: Abstract Linear Algebra',
+      'THEATER 52AC: Dance in American Cultures',
     ],
-    'spring 2026': [
-      'cs 170: efficient algos & intractable probs',
-      'eecs 126: probability & random process',
-      'math 53: multivariable calculus',
-      'ugba 135: personal finance management',
-      'cs 197: cs 189 ucs1 tutor'
+    'Spring 2026': [
+      'CS 170: Efficient Algorithms',
+      'EECS 126: Probability & Random Processes',
+      'MATH 53: Multivariable Calculus',
+      'UGBA 135: Personal Finance Management',
+      'Teaching: CS 189 Tutor',
     ],
   } as const
 
@@ -65,8 +64,8 @@ export default function Courses() {
 
   return (
     <section>
-      <h1 className="mb-4 text-2xl font-semibold tracking-tighter">courses</h1>
-      <p className="mb-6">timeline overview.</p>
+      <h1 className="mb-4 text-4xl font-semibold tracking-tighter">Courses</h1>
+      <p className="mb-6">Timeline overview.</p>
       <div className="relative mt-6 md:hidden">
         <div className="absolute left-4 top-0 h-full w-px bg-neutral-300 dark:bg-neutral-400" />
         <div className="space-y-6 pl-12">

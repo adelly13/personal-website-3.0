@@ -24,7 +24,7 @@ export default function Footer() {
             className="footer-link flex items-center transition-all"
             rel="noopener noreferrer"
             target="_blank"
-            href="/https://www.linkedin.com/in/adelinachau/"
+            href="https://www.linkedin.com/in/adelinachau/"
           >
             <ArrowIcon />
             <p className="ml-2 h-7">linkedin</p>
@@ -35,7 +35,7 @@ export default function Footer() {
             className="footer-link flex items-center transition-all"
             rel="noopener noreferrer"
             target="_blank"
-            href="https://github.com/vercel/next.js"
+            href="https://github.com/adelly13"
           >
             <ArrowIcon />
             <p className="ml-2 h-7">github</p>

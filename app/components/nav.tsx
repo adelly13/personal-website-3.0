@@ -7,15 +7,15 @@ const navItems = {
   '/': {
     name: '~',
   },
-  '/courses': {
-    name: '/courses',
-  },
   '/research': {
     name: '/research',
   },
-  '/misc': {
-    name: '/misc',
+  '/courses': {
+    name: '/courses',
   },
+  // '/misc': {
+  //   name: '/misc',
+  // },
 }
 
 const THEME_KEY = 'theme'
