@@ -9,6 +9,16 @@ const signatureFont = Great_Vibes({
 export default function Page() {
   return (
     <section>
+      <div className="mx-auto mb-1 w-[min(62vw,240px)] md:hidden">
+        <Image
+          alt="Adelina Chau"
+          className="aspect-square w-full rounded-md object-cover object-center"
+          height={400}
+          priority
+          src="/images/profile.png"
+          width={400}
+        />
+      </div>
       <svg
         aria-label="adelina chau"
         className={`mt-0 mb-2 signature ${signatureFont.className}`}
@@ -19,7 +29,7 @@ export default function Page() {
           adelina chau
         </text>
       </svg>
-      <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+      <div className="flex flex-col-reverse gap-5 md:flex-row md:items-start md:justify-between md:gap-6">
         <div className="md:flex-1">
           <p className="mb-4">
             I'm a second-year student at{' '}
@@ -38,12 +48,11 @@ export default function Page() {
             Formula 1, and traveling!
           </p>
         </div>
-        <div className="mx-auto w-40 shrink-0 md:mx-0 md:w-44">
+        <div className="hidden w-44 shrink-0 md:block">
           <Image
             alt="Adelina Chau"
             className="aspect-square w-full rounded-md object-cover object-center"
             height={400}
-            priority
             src="/images/profile.png"
             width={400}
           />

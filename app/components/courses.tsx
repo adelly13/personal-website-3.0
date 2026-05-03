@@ -66,43 +66,34 @@ export default function Courses() {
     <section>
       <h1 className="mb-4 text-4xl font-semibold tracking-tighter">Courses</h1>
       <p className="mb-6">Timeline overview.</p>
-      <div className="relative mt-6 md:hidden">
-        <div className="absolute left-4 top-0 h-full w-px bg-neutral-300 dark:bg-neutral-400" />
-        <div className="space-y-6 pl-12">
-          {orderedSemesters.map((semester) => {
-            const courses = semesterCourses[semester]
-            return (
-              <div key={semester} className="relative">
-                <span className="absolute left-4 top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full bg-neutral-900 dark:bg-neutral-100" />
-                <div className="course-card rounded-xl border border-neutral-200 p-4 text-sm shadow-sm dark:border-neutral-800">
-                  <h2 className="text-base font-semibold tracking-tight">
-                    {semester}
-                  </h2>
-                  <div className="mt-2 space-y-1 text-[0.85rem]">
-                    {courses.map((course) => {
-                      const [prefix, ...rest] = course.split(':')
-                      const suffix = rest.join(':').trim()
-                      return (
-                        <p key={course}>
-                          {suffix ? (
-                            <>
-                              <strong className="underline underline-offset-4">
-                                {`${prefix}:`}
-                              </strong>{' '}
-                              {suffix}
-                            </>
-                          ) : (
-                            <strong>{course}</strong>
-                          )}
-                        </p>
-                      )
-                    })}
-                  </div>
-                </div>
-              </div>
-            )
-          })}
-        </div>
+      <div className="mt-6 space-y-6 md:hidden">
+        {orderedSemesters.map((semester) => {
+          const courses = semesterCourses[semester]
+          return (
+            <div key={semester}>
+              <h2 className="text-base font-semibold tracking-tight">
+                {semester}
+              </h2>
+              <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
+                {courses.map((course) => {
+                  const [prefix, ...rest] = course.split(':')
+                  const suffix = rest.join(':').trim()
+                  return (
+                    <li key={course}>
+                      {suffix ? (
+                        <>
+                          <strong>{`${prefix}:`}</strong> {suffix}
+                        </>
+                      ) : (
+                        <strong>{course}</strong>
+                      )}
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          )
+        })}
       </div>
       <div className="relative mt-6 hidden md:block">
         <svg
