@@ -1,6 +1,6 @@
-import { getBlogPosts } from 'app/blog/utils'
+import { blogEnabled, getBlogPosts } from 'app/blog/utils'
 
-export const baseUrl = 'https://portfolio-blog-starter.vercel.app'
+export const baseUrl = 'https://personal-website-3-0-theta.vercel.app'
 
 export default async function sitemap() {
   let blogs = getBlogPosts().map((post) => ({
@@ -8,7 +8,7 @@ export default async function sitemap() {
     lastModified: post.metadata.publishedAt,
   }))
 
-  let routes = ['', '/blog'].map((route) => ({
+  let routes = ['', '/research', '/courses', ...(blogEnabled ? ['/blog'] : [])].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString().split('T')[0],
   }))

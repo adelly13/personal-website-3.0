@@ -6,7 +6,11 @@ import { PrivateGate } from 'app/components/private-gate'
 
 export const dynamic = 'force-dynamic'
 
-export default async function PrivatePost({ params }) {
+type PrivatePostProps = {
+  params: Promise<{ slug: string }>
+}
+
+export default async function PrivatePost({ params }: PrivatePostProps) {
   const cookieStore = await cookies()
   const hasAccess = cookieStore.get('private_access')?.value === 'granted'
 
@@ -14,7 +18,8 @@ export default async function PrivatePost({ params }) {
     return <PrivateGate />
   }
 
-  const post = getPrivatePosts().find((entry) => entry.slug === params.slug)
+  const { slug } = await params
+  const post = getPrivatePosts().find((entry) => entry.slug === slug)
 
   if (!post) {
     notFound()

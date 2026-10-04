@@ -6,11 +6,32 @@ type Metadata = {
   publishedAt: string
   summary: string
   image?: string
+  tags?: string[]
+  visibility?: 'visible' | 'hidden'
+  updatedAt?: string
+}
+
+function parseMetadataValue(value: string) {
+  let cleaned = value.trim().replace(/^['"](.*)['"]$/, '$1')
+
+  if (cleaned.startsWith('[') && cleaned.endsWith(']')) {
+    return cleaned
+      .slice(1, -1)
+      .split(',')
+      .map((item) => item.trim().replace(/^['"](.*)['"]$/, '$1'))
+      .filter(Boolean)
+  }
+
+  return cleaned
 }
 
 function parseFrontmatter(fileContent: string) {
   let frontmatterRegex = /---\s*([\s\S]*?)\s*---/
   let match = frontmatterRegex.exec(fileContent)
+  if (!match) {
+    throw new Error('MDX file is missing frontmatter')
+  }
+
   let frontMatterBlock = match![1]
   let content = fileContent.replace(frontmatterRegex, '').trim()
   let frontMatterLines = frontMatterBlock.trim().split('\n')
@@ -19,9 +40,11 @@ function parseFrontmatter(fileContent: string) {
   frontMatterLines.forEach((line) => {
     let [key, ...valueArr] = line.split(': ')
     let value = valueArr.join(': ').trim()
-    value = value.replace(/^['"](.*)['"]$/, '$1') // Remove quotes
-    metadata[key.trim() as keyof Metadata] = value
+    metadata[key.trim() as keyof Metadata] = parseMetadataValue(value) as never
   })
+
+  metadata.visibility = metadata.visibility || 'visible'
+  metadata.tags = metadata.tags || []
 
   return { metadata: metadata as Metadata, content }
 }
@@ -49,8 +72,19 @@ function getMDXData(dir) {
   })
 }
 
+// Flip to true to publish the blog. While false, the blog is only visible
+// in local dev (npm run dev); in production every /blog page is a 404 and
+// posts are left out of the sitemap and RSS feed.
+const BLOG_PUBLISHED = false
+
+export const blogEnabled =
+  BLOG_PUBLISHED || process.env.NODE_ENV !== 'production'
+
 export function getBlogPosts() {
-  return getMDXData(path.join(process.cwd(), 'app', 'blog', 'posts'))
+  if (!blogEnabled) return []
+  return getMDXData(path.join(process.cwd(), 'app', 'blog', 'posts')).filter(
+    (post) => post.metadata.visibility !== 'hidden'
+  )
 }
 
 export function getPrivatePosts() {

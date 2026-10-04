@@ -1,4 +1,5 @@
 import './global.css'
+import 'katex/dist/katex.min.css'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Navbar } from './components/nav'
@@ -24,14 +25,20 @@ export const metadata: Metadata = {
     template: '%s | Adelina Chau',
   },
 
-  description: 'This is my portfolio.',
+  description:
+    'EECS & Business student at UC Berkeley building interpretable machine learning methods for biology.',
   openGraph: {
-    title: 'My Portfolio',
-    description: 'This is my portfolio.',
+    title: 'Adelina Chau',
+    description:
+      'EECS & Business student at UC Berkeley building interpretable machine learning methods for biology.',
     url: baseUrl,
-    siteName: 'My Portfolio',
+    siteName: 'Adelina Chau',
     locale: 'en_US',
     type: 'website',
+    images: [{ url: '/og', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
   },
   robots: {
     index: true,

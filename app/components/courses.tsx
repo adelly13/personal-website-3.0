@@ -1,3 +1,46 @@
+// Cheatsheet PDFs live in public/cheatsheets/
+const cheatsheets: Record<string, string> = {
+  'EECS 16A': '/cheatsheets/eecs16a.pdf',
+  'EECS 16B': '/cheatsheets/eecs16b.pdf',
+  'CS 61C': '/cheatsheets/cs61c.pdf', // PDF itself is password-locked
+  'MATH 110': '/cheatsheets/math110.pdf',
+  'EECS 126': '/cheatsheets/eecs126.pdf',
+  'MATH 53': '/cheatsheets/math53.pdf',
+  'UGBA 104': '/cheatsheets/ugba104.pdf',
+}
+
+const graduateCourses = new Set(['CS 294-302'])
+
+function CourseItem({ course }: { course: string }) {
+  const [prefix, ...rest] = course.split(':')
+  const suffix = rest.join(':').trim()
+  if (!suffix) return <strong>{course}</strong>
+  const cheatsheet = cheatsheets[prefix]
+  return (
+    <>
+      <strong className="underline underline-offset-4">{`${prefix}:`}</strong>{' '}
+      {suffix}
+      {graduateCourses.has(prefix) && (
+        <span className="ml-1.5 rounded border border-neutral-300 px-1 py-px align-middle text-[0.65rem] font-medium uppercase tracking-wide text-neutral-600 dark:border-neutral-600 dark:text-neutral-400">
+          Grad
+        </span>
+      )}
+      {cheatsheet && (
+        <a
+          href={cheatsheet}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ml-1.5 rounded border border-neutral-300 px-1 py-px align-middle text-[0.65rem] font-medium uppercase tracking-wide text-neutral-600 transition-colors hover:bg-neutral-100 dark:border-neutral-600 dark:text-neutral-400 dark:hover:bg-neutral-800"
+          aria-label={`${prefix} cheatsheet (PDF)`}
+          title="Cheatsheet"
+        >
+          PDF
+        </a>
+      )}
+    </>
+  )
+}
+
 export default function Courses() {
   const semesterCourses = {
     'Summer 2024': [
@@ -5,13 +48,13 @@ export default function Courses() {
     ],
     'Fall 2024': [
       'CS 61B: Data Structures',
-      'CS 195: Implications of Computing Technology',
+      'CS 195: Implications of Computing Tech',
       'EECS 16A: Info. Devices & Systems',
       'UGBA 10X: Foundations of Business',
       'UGBA 196: Technology Innovation',
     ],
     'Spring 2025': [
-      'CS 70: Discrete Mathematics & Probability Theory',
+      'CS 70: Discrete Math & Probability',
       'DESINV 22: Prototyping & Fabrication',
       'EECS 16B: Circuits & Devices',
       'MATH 54: Linear Algebra & Diff. Eqns.',
@@ -22,51 +65,36 @@ export default function Courses() {
       'CS 189: Machine Learning',
       'EECS 127: Optimization',
       'MATH 110: Abstract Linear Algebra',
-      'THEATER 52AC: Dance in American Cultures',
+      'THEATER 52AC: Dance in US Cultures',
     ],
     'Spring 2026': [
       'CS 170: Efficient Algorithms',
       'EECS 126: Probability & Random Processes',
       'MATH 53: Multivariable Calculus',
-      'UGBA 135: Personal Finance Management',
+      'UGBA 135: Personal Finance',
+      'Teaching: CS 189 Tutor',
+    ],
+    'Summer 2026': [
+      'UGBA 102A: Financial Accounting',
+      'UGBA 104: Business Analytics',
+      'Teaching: CS 61C TA',
+    ],
+    'Fall 2026': [
+      'CS 162: Operating Systems',
+      'CS 152: Computer Architecture',
+      'CS 294-302: Deep Learning for Cancer Immunology',
+      'UGBA 100: Business Communication',
+      'UGBA 107: Business Ethics',
       'Teaching: CS 189 Tutor',
     ],
   } as const
 
   const orderedSemesters = Object.keys(semesterCourses).reverse()
-  const rowHeight = 180
-  const rowGap = 40
-  const step = rowHeight + rowGap
-  const startY = rowHeight / 2
-  const svgHeight = startY * 2 + step * (orderedSemesters.length - 1)
-  const centerX = 30
-  const amplitude = 12
-  const curvePoints = orderedSemesters.map((_, index) => ({
-    x: index % 2 === 0 ? centerX - amplitude : centerX + amplitude,
-    y: startY + index * step,
-  }))
-  const curvePath = curvePoints.reduce((path, point, index, points) => {
-    if (index === 0) return `M ${point.x} ${point.y}`
-    const p0 = points[index - 1]
-    const p1 = points[index]
-    const pPrev = points[index - 2] ?? p0
-    const pNext = points[index + 1] ?? p1
-    const control1 = {
-      x: p0.x + (p1.x - pPrev.x) / 6,
-      y: p0.y + (p1.y - pPrev.y) / 6,
-    }
-    const control2 = {
-      x: p1.x - (pNext.x - p0.x) / 6,
-      y: p1.y - (pNext.y - p0.y) / 6,
-    }
-    return `${path} C ${control1.x} ${control1.y}, ${control2.x} ${control2.y}, ${p1.x} ${p1.y}`
-  }, '')
 
   return (
     <section>
-      <h1 className="mb-4 text-4xl font-semibold tracking-tighter">Courses</h1>
-      <p className="mb-6">Timeline overview.</p>
-      <div className="mt-6 space-y-6 md:hidden">
+      <h1 className="mt-6 mb-4 text-4xl font-semibold tracking-tighter">Courses</h1>
+      <div className="mt-6 space-y-6">
         {orderedSemesters.map((semester) => {
           const courses = semesterCourses[semester]
           return (
@@ -75,120 +103,15 @@ export default function Courses() {
                 {semester}
               </h2>
               <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
-                {courses.map((course) => {
-                  const [prefix, ...rest] = course.split(':')
-                  const suffix = rest.join(':').trim()
-                  return (
-                    <li key={course}>
-                      {suffix ? (
-                        <>
-                          <strong>{`${prefix}:`}</strong> {suffix}
-                        </>
-                      ) : (
-                        <strong>{course}</strong>
-                      )}
-                    </li>
-                  )
-                })}
+                {courses.map((course) => (
+                  <li key={course}>
+                    <CourseItem course={course} />
+                  </li>
+                ))}
               </ul>
             </div>
           )
         })}
-      </div>
-      <div className="relative mt-6 hidden md:block">
-        <svg
-          aria-hidden="true"
-          className="pointer-events-none absolute left-1/2 top-0 h-full w-14 -translate-x-1/2 text-neutral-300 dark:text-neutral-400 -z-10"
-          viewBox={`0 0 60 ${svgHeight}`}
-        >
-          <path
-            d={curvePath}
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeWidth="2"
-          />
-          {curvePoints.map((point, index) => (
-            <circle
-              key={index}
-              cx={point.x}
-              cy={point.y}
-              r="5"
-              fill="currentColor"
-            />
-          ))}
-        </svg>
-        <div
-          className="relative grid"
-          style={{ gridAutoRows: `${rowHeight}px`, rowGap: `${rowGap}px` }}
-        >
-          {orderedSemesters.map((semester, index) => {
-            const isLeft = index % 2 === 0
-            const courses = semesterCourses[semester]
-            return (
-              <div
-                key={semester}
-                className="grid grid-cols-[minmax(0,1fr)_48px_minmax(0,1fr)] items-center gap-x-3"
-              >
-                <div className={isLeft ? '' : 'md:pointer-events-none md:opacity-0'}>
-                  <div className="course-card rounded-xl border border-neutral-200 p-4 text-sm shadow-sm dark:border-neutral-800">
-                    <h2 className="text-base font-semibold tracking-tight">
-                      {semester}
-                    </h2>
-                    <div className="mt-2 space-y-1 text-[0.85rem]">
-                      {courses.map((course) => {
-                        const [prefix, ...rest] = course.split(':')
-                        const suffix = rest.join(':').trim()
-                        return (
-                          <p key={course}>
-                            {suffix ? (
-                              <>
-                                <strong className="underline underline-offset-4">
-                                  {`${prefix}:`}
-                                </strong>{' '}
-                                {suffix}
-                              </>
-                            ) : (
-                              <strong>{course}</strong>
-                            )}
-                          </p>
-                        )
-                      })}
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center justify-center" />
-                <div className={isLeft ? 'md:pointer-events-none md:opacity-0' : ''}>
-                  <div className="course-card rounded-xl border border-neutral-200 p-4 text-sm shadow-sm dark:border-neutral-800">
-                    <h2 className="text-base font-semibold tracking-tight">
-                      {semester}
-                    </h2>
-                    <div className="mt-2 space-y-1 text-[0.85rem]">
-                      {courses.map((course) => {
-                        const [prefix, ...rest] = course.split(':')
-                        const suffix = rest.join(':').trim()
-                        return (
-                          <p key={course}>
-                            {suffix ? (
-                              <>
-                                <strong className="underline underline-offset-4">
-                                  {`${prefix}:`}
-                                </strong>{' '}
-                                {suffix}
-                              </>
-                            ) : (
-                              <strong>{course}</strong>
-                            )}
-                          </p>
-                        )
-                      })}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
-        </div>
       </div>
     </section>
   )

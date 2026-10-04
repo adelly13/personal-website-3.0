@@ -1,9 +1,69 @@
+const SELF = 'Adelina Chau'
+
+const publications = [
+  {
+    title:
+      'Extracting interpretable single-cell metabolic states with graph-guided representation learning',
+    authors: [
+      'Daniel P. Lewinsohn',
+      'Nicolas Dias',
+      'Adelina Chau',
+      'Yuko Koike',
+      'Zachary D. Smith',
+      'Nilah M. Ioannidis',
+      'Allon Wagner',
+    ],
+    venue: 'bioRxiv preprint, 2026',
+    links: {
+      bioRxiv: 'https://doi.org/10.64898/2026.09.17.751504',
+      code: 'https://github.com/wagnerlab-berkeley/mern',
+    },
+  },
+  {
+    title:
+      'Folate deficiency disrupts key metabolic transitions within the developing neural ectoderm',
+    authors: [
+      'Nicolas Dias',
+      'Daniel P. Lewinsohn',
+      'William N. Colgan',
+      'Minming Wang',
+      'Yusuke Kijima',
+      'JoAnne Villagrana',
+      'Tien-Chi Jason Hou',
+      'Gokul Gowri',
+      'Adelina Chau',
+      'Tuğçe Aktaş',
+      'Kaelyn Sumigray',
+      'Jonathan S. Weissman',
+      'Luke W. Koblan',
+      'Allon Wagner',
+      'Zachary D. Smith',
+    ],
+    venue: 'bioRxiv preprint, 2026',
+    links: { bioRxiv: 'https://doi.org/10.64898/2026.09.18.752622' },
+  },
+  {
+    title: 'Multi-channel FourierNet for large-scale shift variant reconstruction',
+    authors: [
+      'Qianwan Yang',
+      'Ruipeng Guo',
+      'Guorong Hu',
+      'Adelina Chau',
+      'Jamin Xie',
+      'Lei Tian',
+    ],
+    venue:
+      'SPIE Computational Optical Imaging and Artificial Intelligence in Biomedical Sciences, 2024',
+    links: { doi: 'https://doi.org/10.1117/12.3001718' },
+  },
+]
+
 export default function Research() {
   return (
     <section>
-      <h1 className="mb-4 text-4xl font-semibold tracking-tighter">Research</h1>
+      <h1 className="mt-6 mb-4 text-4xl font-semibold tracking-tighter">Research</h1>
 
-      <p className="mb-4">I am interested in applying computational methods to creating novel treatments and improving early disease detection, particularly as it relates to cancer biology and immunometabolism.</p>
+      <p className="mb-4">I'm interested in building interpretable machine learning methods for biology, using ideas from probability, information theory, and statistical physics to make models more biologically meaningful.</p>
 
       <p className="mb-4">
         Currently, in the{' '}
@@ -15,9 +75,18 @@ export default function Research() {
         >
           Wagner lab
         </a>
-        , I work on understanding how a given cell's transcriptomic state maps
-        to its metabolic state, in addition to how metabolic programs vary
-        across cell types, niches, and continuous trajectories.
+        , I work on spatial metabolism, studying how a cell's metabolism is
+        shaped by its surrounding tissue environment. I've also worked on{' '}
+        <a
+          className="underline"
+          href="https://github.com/wagnerlab-berkeley/mern"
+          rel="noreferrer"
+          target="_blank"
+        >
+          MeRN
+        </a>
+        , a framework for inferring interpretable metabolic activity from
+        single-cell RNA-seq.
       </p>
 
       <p className="mb-4">Previously, I've worked on quantum machine learning for small organic molecule discovery and computational microscopy in the {' '}
@@ -31,7 +100,62 @@ export default function Research() {
         </a>
         </p>
 
-      {/* <p className="mb-4">i'm generally driven by the intersection between machine learning and biological questions. currently, i work on computational immunology under prof. allon wagner and phd student daniel lewinsohn. in particular my current project is in utilizing graph variational autoencoders to infer metabolic states from transcriptomic states! previously, i've done a lot of work in quantum gans for small organic molecule discovery under dr. larry mcmahan and computational microscopy under prof. lei tian and phd student qianwan yang!</p> */}
+      <h2 className="mt-10 mb-4 text-2xl font-semibold tracking-tighter">
+        Selected Publications
+      </h2>
+      <p className="mb-6 text-sm text-neutral-600 dark:text-neutral-400">
+        See also{' '}
+        <a
+          className="underline"
+          href="https://scholar.google.com/citations?user=v6yg79cAAAAJ"
+          rel="noreferrer"
+          target="_blank"
+        >
+          Google Scholar
+        </a>{' '}
+        and{' '}
+        <a
+          className="underline"
+          href="https://orcid.org/0009-0002-1691-8732"
+          rel="noreferrer"
+          target="_blank"
+        >
+          ORCID
+        </a>
+        .
+      </p>
+      <ul className="space-y-6">
+        {publications.map((pub) => (
+          <li key={pub.title}>
+            <p className="font-semibold">{pub.title}</p>
+            <p className="mt-1 text-sm">
+              {pub.authors.map((author, i) => (
+                <span key={author}>
+                  {i > 0 && ', '}
+                  {author === SELF ? <strong>{author}</strong> : author}
+                </span>
+              ))}
+            </p>
+            <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
+              <em>{pub.venue}</em>{' '}
+              {Object.entries(pub.links).map(([label, href]) => (
+                <span key={label}>
+                  [
+                  <a
+                    className="underline"
+                    href={href}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {label}
+                  </a>
+                  ]
+                </span>
+              ))}
+            </p>
+          </li>
+        ))}
+      </ul>
     </section>
   )
 }

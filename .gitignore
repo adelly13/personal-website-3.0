@@ -35,3 +35,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# blog drafts: unpublished, keep off the public repo (remove when publishing)
+/app/blog/posts/*
+!/app/blog/posts/.gitkeep

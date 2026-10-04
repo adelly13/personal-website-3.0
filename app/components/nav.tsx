@@ -53,7 +53,7 @@ export function Navbar() {
                 <Link
                   key={path}
                   href={path}
-                  className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2 m-1"
+                  className="nav-link transition-all rounded-md flex align-middle relative py-1 px-2 m-1"
                 >
                   {name}
                 </Link>
@@ -63,7 +63,7 @@ export function Navbar() {
           <button
             aria-label="Toggle color theme"
             aria-pressed={theme === 'dark'}
-            className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex items-center justify-center h-8 w-8 m-1"
+            className="nav-link transition-all rounded-md flex items-center justify-center h-8 w-8 m-1"
             onClick={toggleTheme}
             type="button"
           >

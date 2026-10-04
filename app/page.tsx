@@ -15,7 +15,7 @@ export default function Page() {
           className="aspect-square w-full rounded-md object-cover object-center"
           height={400}
           priority
-          src="/images/profile.png"
+          src="/images/profile.jpg"
           width={400}
         />
       </div>
@@ -32,7 +32,7 @@ export default function Page() {
       <div className="flex flex-col-reverse gap-5 md:flex-row md:items-start md:justify-between md:gap-6">
         <div className="md:flex-1">
           <p className="mb-4">
-            I'm a second-year student at{' '}
+            I'm a student at{' '}
             <a
               className="underline"
               href="https://met.berkeley.edu/"
@@ -53,7 +53,7 @@ export default function Page() {
             alt="Adelina Chau"
             className="aspect-square w-full rounded-md object-cover object-center"
             height={400}
-            src="/images/profile.png"
+            src="/images/profile.jpg"
             width={400}
           />
         </div>

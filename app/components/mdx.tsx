@@ -3,6 +3,9 @@ import Image from 'next/image'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { highlight } from 'sugar-high'
 import React from 'react'
+import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => (
@@ -46,6 +49,57 @@ function CustomLink(props) {
 
 function RoundedImage(props) {
   return <Image alt={props.alt} className="rounded-lg" {...props} />
+}
+
+function Callout({ title, children, type = 'note' }) {
+  return (
+    <aside className={`mdx-callout mdx-callout-${type}`}>
+      {title ? <div className="mdx-callout-title">{title}</div> : null}
+      <div>{children}</div>
+    </aside>
+  )
+}
+
+function Definition({ title, children }) {
+  return (
+    <aside className="mdx-box mdx-definition">
+      <div className="mdx-box-title">
+        {title ? `Definition: ${title}` : 'Definition'}
+      </div>
+      <div>{children}</div>
+    </aside>
+  )
+}
+
+function Theorem({ title, children }) {
+  return (
+    <aside className="mdx-box mdx-theorem">
+      <div className="mdx-box-title">{title ? `Theorem: ${title}` : 'Theorem'}</div>
+      <div>{children}</div>
+    </aside>
+  )
+}
+
+function Proof({ children }) {
+  return (
+    <aside className="mdx-box mdx-proof">
+      <div className="mdx-box-title">Proof</div>
+      <div>{children}</div>
+    </aside>
+  )
+}
+
+function Figure({ src, alt, caption, width = 1200, height = 800 }) {
+  return (
+    <figure className="mdx-figure">
+      <Image src={src} alt={alt || ''} width={width} height={height} />
+      {caption ? <figcaption>{caption}</figcaption> : null}
+    </figure>
+  )
+}
+
+function ImageRow({ children }) {
+  return <div className="mdx-image-row">{children}</div>
 }
 
 function Code({ children, ...props }) {
@@ -97,12 +151,25 @@ let components = {
   a: CustomLink,
   code: Code,
   Table,
+  Callout,
+  Note: Callout,
+  Definition,
+  Theorem,
+  Proof,
+  Figure,
+  ImageRow,
 }
 
 export function CustomMDX(props) {
   return (
     <MDXRemote
       {...props}
+      options={{
+        mdxOptions: {
+          remarkPlugins: [remarkGfm, remarkMath],
+          rehypePlugins: [rehypeKatex],
+        },
+      }}
       components={{ ...components, ...(props.components || {}) }}
     />
   )

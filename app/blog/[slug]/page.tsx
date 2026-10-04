@@ -11,8 +11,13 @@ export async function generateStaticParams() {
   }))
 }
 
-export function generateMetadata({ params }) {
-  let post = getBlogPosts().find((post) => post.slug === params.slug)
+type BlogPageProps = {
+  params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: BlogPageProps) {
+  let { slug } = await params
+  let post = getBlogPosts().find((post) => post.slug === slug)
   if (!post) {
     return
   }
@@ -51,8 +56,9 @@ export function generateMetadata({ params }) {
   }
 }
 
-export default function Blog({ params }) {
-  let post = getBlogPosts().find((post) => post.slug === params.slug)
+export default async function Blog({ params }: BlogPageProps) {
+  let { slug } = await params
+  let post = getBlogPosts().find((post) => post.slug === slug)
 
   if (!post) {
     notFound()
@@ -90,6 +96,15 @@ export default function Blog({ params }) {
           {formatDate(post.metadata.publishedAt)}
         </p>
       </div>
+      {post.metadata.tags?.length ? (
+        <div className="mb-8 flex flex-wrap gap-1.5">
+          {post.metadata.tags.map((tag) => (
+            <span key={tag} className="blog-post-tag">
+              {tag}
+            </span>
+          ))}
+        </div>
+      ) : null}
       <article className="prose">
         <CustomMDX source={post.content} />
       </article>
