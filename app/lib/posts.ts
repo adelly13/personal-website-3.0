@@ -58,7 +58,7 @@ function readMDXFile(filePath) {
   return parseFrontmatter(rawContent)
 }
 
-function getMDXData(dir) {
+export function getMDXData(dir) {
   let mdxFiles = getMDXFiles(dir)
   return mdxFiles.map((file) => {
     let { metadata, content } = readMDXFile(path.join(dir, file))
@@ -72,24 +72,7 @@ function getMDXData(dir) {
   })
 }
 
-// Flip to true to publish the blog. While false, the blog is only visible
-// in local dev (npm run dev); in production every /blog page is a 404 and
-// posts are left out of the sitemap and RSS feed.
-const BLOG_PUBLISHED = false
-
-export const blogEnabled =
-  BLOG_PUBLISHED || process.env.NODE_ENV !== 'production'
-
-export function getBlogPosts() {
-  if (!blogEnabled) return []
-  return getMDXData(path.join(process.cwd(), 'app', 'blog', 'posts')).filter(
-    (post) => post.metadata.visibility !== 'hidden'
-  )
-}
-
-export function getPrivatePosts() {
-  return getMDXData(path.join(process.cwd(), 'app', 'private', 'posts'))
-}
+export type Post = ReturnType<typeof getMDXData>[number]
 
 export function formatDate(date: string, includeRelative = false) {
   let currentDate = new Date()

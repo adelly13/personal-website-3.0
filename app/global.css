@@ -18,16 +18,12 @@
   --sh-entity: #e25a1c;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --sh-class: #4c97f8;
-    --sh-identifier: white;
-    --sh-keyword: #f47067;
-    --sh-string: #0fa295;
-  }
-  html {
-    color-scheme: dark;
-  }
+:root.dark {
+  --sh-class: #4c97f8;
+  --sh-identifier: white;
+  --sh-keyword: #f47067;
+  --sh-string: #0fa295;
+  color-scheme: dark;
 }
 
 html {
@@ -163,16 +159,16 @@ body {
   @apply my-8 grid gap-4 md:grid-cols-2;
 }
 
-.blog-tag-filter {
+.post-tag-filter {
   @apply rounded-md border border-neutral-300 dark:border-neutral-700 px-2.5 py-1 text-sm text-neutral-700 dark:text-neutral-300 transition-colors;
 }
 
-.blog-tag-filter:hover,
-.blog-tag-filter.active {
+.post-tag-filter:hover,
+.post-tag-filter.active {
   @apply border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100;
 }
 
-.blog-post-tag {
+.post-tag {
   @apply rounded-sm bg-neutral-200/70 dark:bg-neutral-800 px-1.5 py-0.5 text-xs text-neutral-700 dark:text-neutral-300;
 }
 

@@ -36,6 +36,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# blog drafts: unpublished, keep off the public repo (remove when publishing)
-/app/blog/posts/*
-!/app/blog/posts/.gitkeep
+# notebook drafts: unpublished, keep off the public repo (remove when publishing)
+/app/notebook/posts/*
+!/app/notebook/posts/.gitkeep

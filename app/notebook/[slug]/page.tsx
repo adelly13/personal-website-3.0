@@ -1,23 +1,24 @@
 import { notFound } from 'next/navigation'
 import { CustomMDX } from 'app/components/mdx'
-import { formatDate, getBlogPosts } from 'app/blog/utils'
+import { formatDate } from 'app/lib/posts'
+import { getNotebookPosts } from 'app/notebook/utils'
 import { baseUrl } from 'app/sitemap'
 
 export async function generateStaticParams() {
-  let posts = getBlogPosts()
+  let posts = getNotebookPosts()
 
   return posts.map((post) => ({
     slug: post.slug,
   }))
 }
 
-type BlogPageProps = {
+type PageProps = {
   params: Promise<{ slug: string }>
 }
 
-export async function generateMetadata({ params }: BlogPageProps) {
+export async function generateMetadata({ params }: PageProps) {
   let { slug } = await params
-  let post = getBlogPosts().find((post) => post.slug === slug)
+  let post = getNotebookPosts().find((post) => post.slug === slug)
   if (!post) {
     return
   }
@@ -40,7 +41,7 @@ export async function generateMetadata({ params }: BlogPageProps) {
       description,
       type: 'article',
       publishedTime,
-      url: `${baseUrl}/blog/${post.slug}`,
+      url: `${baseUrl}/notebook/${post.slug}`,
       images: [
         {
           url: ogImage,
@@ -56,9 +57,9 @@ export async function generateMetadata({ params }: BlogPageProps) {
   }
 }
 
-export default async function Blog({ params }: BlogPageProps) {
+export default async function NotebookPost({ params }: PageProps) {
   let { slug } = await params
-  let post = getBlogPosts().find((post) => post.slug === slug)
+  let post = getNotebookPosts().find((post) => post.slug === slug)
 
   if (!post) {
     notFound()
@@ -72,7 +73,7 @@ export default async function Blog({ params }: BlogPageProps) {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
-            '@type': 'BlogPosting',
+            '@type': 'Article',
             headline: post.metadata.title,
             datePublished: post.metadata.publishedAt,
             dateModified: post.metadata.publishedAt,
@@ -80,7 +81,7 @@ export default async function Blog({ params }: BlogPageProps) {
             image: post.metadata.image
               ? `${baseUrl}${post.metadata.image}`
               : `/og?title=${encodeURIComponent(post.metadata.title)}`,
-            url: `${baseUrl}/blog/${post.slug}`,
+            url: `${baseUrl}/notebook/${post.slug}`,
             author: {
               '@type': 'Person',
               name: 'My Portfolio',
@@ -99,7 +100,7 @@ export default async function Blog({ params }: BlogPageProps) {
       {post.metadata.tags?.length ? (
         <div className="mb-8 flex flex-wrap gap-1.5">
           {post.metadata.tags.map((tag) => (
-            <span key={tag} className="blog-post-tag">
+            <span key={tag} className="post-tag">
               {tag}
             </span>
           ))}

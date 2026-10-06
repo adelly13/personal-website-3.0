@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { formatDate, getPrivatePosts } from 'app/blog/utils'
+import { formatDate } from 'app/lib/posts'
+import { getPrivatePosts } from 'app/private/utils'
 
 export function PrivatePosts() {
   let allPosts = getPrivatePosts()

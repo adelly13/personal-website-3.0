@@ -1,30 +1,39 @@
 import Link from 'next/link'
-import { formatDate, getBlogPosts } from 'app/blog/utils'
+import { formatDate, type Post } from 'app/lib/posts'
 
-export function BlogPosts({ activeTag }: { activeTag?: string }) {
-  let allBlogs = getBlogPosts()
+// Tag-filterable list of posts linking to `${basePath}/${slug}`.
+// Shared by every post section (notebook, and later the blog).
+export function PostList({
+  posts: allPosts,
+  basePath,
+  activeTag,
+}: {
+  posts: Post[]
+  basePath: string
+  activeTag?: string
+}) {
   let allTags = Array.from(
-    new Set(allBlogs.flatMap((post) => post.metadata.tags || []))
+    new Set(allPosts.flatMap((post) => post.metadata.tags || []))
   ).sort()
-  let filteredBlogs = activeTag
-    ? allBlogs.filter((post) => post.metadata.tags?.includes(activeTag))
-    : allBlogs
+  let filteredPosts = activeTag
+    ? allPosts.filter((post) => post.metadata.tags?.includes(activeTag))
+    : allPosts
 
   return (
     <div>
       {allTags.length ? (
         <div className="mb-8 flex flex-wrap gap-2">
           <Link
-            href="/blog"
-            className={`blog-tag-filter ${!activeTag ? 'active' : ''}`}
+            href={basePath}
+            className={`post-tag-filter ${!activeTag ? 'active' : ''}`}
           >
             all
           </Link>
           {allTags.map((tag) => (
             <Link
               key={tag}
-              href={`/blog?tag=${encodeURIComponent(tag)}`}
-              className={`blog-tag-filter ${activeTag === tag ? 'active' : ''}`}
+              href={`${basePath}?tag=${encodeURIComponent(tag)}`}
+              className={`post-tag-filter ${activeTag === tag ? 'active' : ''}`}
             >
               {tag}
             </Link>
@@ -32,7 +41,7 @@ export function BlogPosts({ activeTag }: { activeTag?: string }) {
         </div>
       ) : null}
 
-      {filteredBlogs
+      {filteredPosts
         .sort((a, b) => {
           if (
             new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)
@@ -45,7 +54,7 @@ export function BlogPosts({ activeTag }: { activeTag?: string }) {
           <Link
             key={post.slug}
             className="flex flex-col space-y-1 mb-5"
-            href={`/blog/${post.slug}`}
+            href={`${basePath}/${post.slug}`}
           >
             <div className="w-full flex flex-col md:flex-row space-x-0 md:space-x-2">
               <p className="text-neutral-600 dark:text-neutral-400 w-[100px] tabular-nums">
@@ -63,7 +72,7 @@ export function BlogPosts({ activeTag }: { activeTag?: string }) {
                 {post.metadata.tags?.length ? (
                   <div className="mt-1 flex flex-wrap gap-1.5">
                     {post.metadata.tags.map((tag) => (
-                      <span key={tag} className="blog-post-tag">
+                      <span key={tag} className="post-tag">
                         {tag}
                       </span>
                     ))}

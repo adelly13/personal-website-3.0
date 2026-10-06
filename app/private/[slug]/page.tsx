@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation'
 import { cookies } from 'next/headers'
 import { CustomMDX } from 'app/components/mdx'
-import { formatDate, getPrivatePosts } from 'app/blog/utils'
+import { formatDate } from 'app/lib/posts'
+import { getPrivatePosts } from 'app/private/utils'
 import { PrivateGate } from 'app/components/private-gate'
 
 export const dynamic = 'force-dynamic'

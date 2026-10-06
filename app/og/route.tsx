@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
 
-// Link-preview image (1200x630). With ?title= it's a blog post card;
+// Link-preview image (1200x630). With ?title= it's a post card;
 // without it, the default card for the rest of the site.
 export async function GET(request: Request) {
   let url = new URL(request.url)

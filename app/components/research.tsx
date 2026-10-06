@@ -56,6 +56,20 @@ const publications = [
       'SPIE Computational Optical Imaging and Artificial Intelligence in Biomedical Sciences, 2024',
     links: { doi: 'https://doi.org/10.1117/12.3001718' },
   },
+  {
+    title:
+      'Molecular Geometry Generation Processes Through Hybrid Quantum-Classical Generative Adversarial Networks and Python-Based Self-Consistent Field Molecular Calculations',
+    authors: [
+      'Max Cui*',
+      'Adelina Chau*',
+      'Michelle Pan*',
+      'Vaibhav Vaiyakarnam*',
+      'Larry McMahan',
+    ],
+    venue:
+      'IEEE International Conference on Quantum Computing and Engineering (QCE), 2023',
+    links: { IEEE: 'https://ieeexplore.ieee.org/document/10313850' },
+  },
 ]
 
 export default function Research() {
@@ -132,7 +146,7 @@ export default function Research() {
               {pub.authors.map((author, i) => (
                 <span key={author}>
                   {i > 0 && ', '}
-                  {author === SELF ? <strong>{author}</strong> : author}
+                  {author.replace('*', '') === SELF ? <strong>{author}</strong> : author}
                 </span>
               ))}
             </p>
@@ -156,6 +170,9 @@ export default function Research() {
           </li>
         ))}
       </ul>
+      <p className="mt-6 text-xs text-neutral-600 dark:text-neutral-400">
+        * Equal contribution
+      </p>
     </section>
   )
 }
